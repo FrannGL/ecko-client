@@ -29,6 +29,7 @@ export function useMessagesManager(initialMessages: MessageType[] | undefined) {
             authorAvatarUrl: updates.authorAvatarUrl ?? m.authorAvatarUrl,
             parentMessageId: updates.parentMessageId ?? m.parentMessageId,
             createdAt: updates.createdAt ?? m.createdAt,
+            reactions: updates.reactions ?? m.reactions,
           };
           return Message.from(messageData);
         }

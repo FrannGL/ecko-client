@@ -6,9 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { type SendMessageInput, sendMessageSchema } from "@/domain/models/message";
 
-import { Button } from "./ui/button";
-import { Field, FieldContent, FieldError } from "./ui/field";
-import { Input } from "./ui/input";
+import { Button } from "../ui/button";
+import { Field, FieldContent, FieldError } from "../ui/field";
+import { Input } from "../ui/input";
 
 interface MessageInputProps {
   onSendMessage: (data: SendMessageInput) => void;
@@ -33,7 +33,7 @@ export function MessageInput({ onSendMessage, onTyping, onBlur, isPending }: Mes
   };
 
   return (
-    <div className="shrink-0 px-4 py-4 border-t border-border">
+    <div className="shrink-0 px-4 py-4 border-t border-border/50 bg-background/30 backdrop-blur-md">
       <form onSubmit={handleSubmit(onSubmit)} className="flex gap-3 items-end">
         <Field className="flex-1" orientation="vertical">
           <FieldContent>
@@ -45,7 +45,7 @@ export function MessageInput({ onSendMessage, onTyping, onBlur, isPending }: Mes
                 placeholder="Escribe tu mensaje..."
                 disabled={isPending}
                 autoComplete="off"
-                className="min-h-12 text-base rounded-xl shadow-md focus:shadow-lg border border-border/50"
+                className="h-12 bg-background/50 border-border/50 focus-visible:ring-primary/30 transition-all rounded-xl px-4 text-sm font-medium shadow-sm"
               />
             </div>
             <FieldError errors={errors.content ? [errors.content] : []} />
@@ -54,9 +54,9 @@ export function MessageInput({ onSendMessage, onTyping, onBlur, isPending }: Mes
         <Button
           type="submit"
           disabled={isPending}
-          className="self-end h-12 px-4 rounded-xl bg-(--color-primary-dark) text-white hover:bg-(--color-primary-dark)/80 shadow-md hover:shadow-lg transition-shadow"
+          className="self-end h-12 px-5 rounded-xl font-medium tracking-wide bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20 transition-all group"
         >
-          <Send className="size-5" />
+          <Send className="size-5 opacity-80 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
         </Button>
       </form>
     </div>

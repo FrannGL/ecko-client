@@ -105,7 +105,7 @@ function getToastStyles(type?: string) {
 export function ToastItem({ toast }: { toast: Toast }) {
   return (
     <div
-      className={`flex gap-3 p-2.5 rounded-lg border ${getToastStyles(toast.type)} animate-in fade-in slide-in-from-right-2 duration-300 animate-out fade-out slide-out-to-right-2 duration-300`}
+      className={`flex gap-3 p-2.5 rounded-lg border ${getToastStyles(toast.type)} animate-in fade-in slide-in-from-right-2 duration-300 fade-out slide-out-to-right-2`}
     >
       <div className="shrink-0">{getToastIcon(toast.type)}</div>
       <div className="flex-1 min-w-0">

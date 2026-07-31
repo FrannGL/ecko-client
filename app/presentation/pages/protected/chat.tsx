@@ -5,17 +5,17 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { subscribeToTopic } from "@/data/websocket/stompClient";
 import type { SendMessageInput } from "@/domain/models/message";
-import { ChannelHeader } from "@/presentation/components/ChannelHeader";
-import { MessageInput } from "@/presentation/components/MessageInput";
-import { MessageList } from "@/presentation/components/MessageList";
+import type { ReactionWebSocketEvent } from "@/domain/models/reaction";
+import { ChannelHeader } from "@/presentation/components/custom/ChannelHeader";
+import { MessageInput } from "@/presentation/components/custom/MessageInput";
+import { MessageList } from "@/presentation/components/custom/MessageList";
+import { Marker, MarkerContent } from "@/presentation/components/ui";
 import { useChannels } from "@/presentation/hooks/useChannels";
 import { useMessages, useSendMessage } from "@/presentation/hooks/useMessages";
 import { useMessagesManager } from "@/presentation/hooks/useMessagesManager";
 import { useTypingIndicator } from "@/presentation/hooks/useTypingIndicator";
 import { useAuthStore } from "@/presentation/store/authStore";
 import { useUIStore } from "@/presentation/store/uiStore";
-
-import { Marker, MarkerContent } from "~/presentation/components/ui/marker";
 
 export default function ChatPage() {
   const { serverId, channelId } = useParams();
@@ -31,7 +31,7 @@ export default function ChatPage() {
   const { data: messages } = useMessages(numChannelId);
   const sendMessage = useSendMessage(numChannelId);
 
-  const { messages: localMessages } = useMessagesManager(messages);
+  const { messages: localMessages, updateMessage } = useMessagesManager(messages);
   const { typingUsers, handleTyping, stopTyping, setUserNameMap } = useTypingIndicator(numChannelId, user?.id);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -65,7 +65,34 @@ export default function ChatPage() {
     });
 
     return () => sub.unsubscribe();
-  }, [numChannelId, qc]);
+  }, [numChannelId]);
+
+  // Subscribe to reaction updates
+  useEffect(() => {
+    const sub = subscribeToTopic(`/topic/channel/${numChannelId}/reactions`, (message) => {
+      const event = JSON.parse(message.body) as ReactionWebSocketEvent;
+
+      const messageToUpdate = localMessages.find((m) => m.id === event.reaction.messageId);
+      if (!messageToUpdate) return;
+
+      if (event.type === "ADDED") {
+        // Add reaction if not already present (avoid duplicates)
+        const alreadyExists = messageToUpdate.reactions.some((r) => r.id === event.reaction.id);
+        if (!alreadyExists) {
+          updateMessage(event.reaction.messageId, {
+            reactions: [...messageToUpdate.reactions, event.reaction],
+          });
+        }
+      } else if (event.type === "REMOVED") {
+        // Remove reaction by id
+        updateMessage(event.reaction.messageId, {
+          reactions: messageToUpdate.reactions.filter((r) => r.id !== event.reaction.id),
+        });
+      }
+    });
+
+    return () => sub.unsubscribe();
+  }, [numChannelId, localMessages, updateMessage]);
 
   // Handlers
   const handleSendMessage = (data: SendMessageInput) => {
@@ -81,7 +108,7 @@ export default function ChatPage() {
     <div className="flex-1 flex flex-col min-h-0">
       <ChannelHeader channelName={currentChannel?.name} serverId={numServerId} channelId={numChannelId} />
 
-      <MessageList messages={localMessages} currentUserId={user?.id} />
+      <MessageList messages={localMessages} currentUserId={user?.id} channelId={numChannelId} />
 
       {typingUsers.size > 0 && (
         <Marker variant="border" className="px-4">

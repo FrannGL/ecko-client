@@ -2,8 +2,7 @@ import { Plus } from "lucide-react";
 
 import type { Server } from "@/domain/models";
 import type { User } from "@/domain/models/auth";
-import { Button } from "@/presentation/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/presentation/components/ui/tooltip";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@/presentation/components/ui";
 
 import { Logo } from "./Logo";
 import { LogoutDialog } from "./LogoutDialog";
@@ -26,10 +25,12 @@ export function ServerNav({
   onLogout,
 }: ServerNavProps) {
   return (
-    <nav className="w-20 bg-sidebar flex flex-col items-center py-3 gap-2 border-r border-border shrink-0">
-      <Logo size={64} showText={false} />
+    <nav className="w-20 bg-card/20 backdrop-blur-xl flex flex-col items-center py-4 gap-3 border-r border-border/50 shrink-0 relative z-20 shadow-xl">
+      <div className="mb-2">
+        <Logo size={64} showText={false} />
+      </div>
 
-      <div className="w-8 h-px bg-border my-1" />
+      <div className="w-8 h-px bg-border/50 my-1" />
 
       {servers?.map((server) => (
         <Tooltip key={server.id}>
@@ -40,16 +41,18 @@ export function ServerNav({
               onClick={() => {
                 onSelectServer(selectedServerId === server.id ? null : server.id);
               }}
-              className={`w-10 h-10 rounded-xl text-sm font-medium ${
+              className={`w-12 h-12 rounded-[16px] text-lg font-display font-semibold transition-all duration-200 shadow-sm ${
                 selectedServerId === server.id
-                  ? "bg-(--color-primary-dark) text-white hover:bg-(--color-primary-dark)"
-                  : "bg-(--color-muted-dark) text-white hover:bg-(--color-primary-dark)"
+                  ? "bg-primary text-primary-foreground shadow-primary/20 scale-105"
+                  : "bg-background/50 border border-border/50 text-foreground hover:bg-background hover:scale-105"
               }`}
             >
               {server.name.charAt(0).toUpperCase()}
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right">{server.name}</TooltipContent>
+          <TooltipContent side="right" className="font-medium text-sm">
+            {server.name}
+          </TooltipContent>
         </Tooltip>
       ))}
 
@@ -60,12 +63,14 @@ export function ServerNav({
               variant="ghost"
               size="icon"
               onClick={onCreateServer}
-              className="w-10 h-10 rounded-xl bg-(--color-muted-dark) text-white hover:bg-(--color-primary-dark)"
+              className="w-12 h-12 rounded-[16px] bg-background/30 border border-border/50 border-dashed text-muted-foreground hover:text-foreground hover:bg-background/50 hover:border-solid transition-all duration-200 mt-2"
             >
-              <Plus size={18} />
+              <Plus size={24} />
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right">Create Server</TooltipContent>
+          <TooltipContent side="right" className="font-medium text-sm">
+            Crear Servidor
+          </TooltipContent>
         </Tooltip>
       )}
 

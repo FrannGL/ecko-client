@@ -6,10 +6,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import type { CreateServerInput, Server } from "@/domain/models";
 import { createServerSchema } from "@/domain/models";
-import { Button } from "@/presentation/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/presentation/components/ui/dialog";
-import { Input } from "@/presentation/components/ui/input";
-import { Label } from "@/presentation/components/ui/label";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Input,
+  Label,
+} from "@/presentation/components/ui";
 
 interface CreateServerDialogProps {
   open: boolean;

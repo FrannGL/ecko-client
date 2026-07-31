@@ -2,7 +2,7 @@ import { useRoutes } from "react-router-dom";
 
 import { Toaster } from "sonner";
 
-import { ErrorBoundary } from "./presentation/components/ErrorBoundary";
+import { ErrorBoundary } from "./presentation/components/custom/ErrorBoundary";
 import { AppProviders } from "./presentation/providers/AppProviders";
 import { routes } from "./presentation/router";
 

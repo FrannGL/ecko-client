@@ -11,9 +11,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/presentation/components/ui/alert-dialog";
-import { Button } from "@/presentation/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/presentation/components/ui/tooltip";
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/presentation/components/ui";
 
 interface LogoutDialogProps {
   onLogout: () => void;

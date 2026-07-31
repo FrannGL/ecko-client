@@ -6,11 +6,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import type { Channel, CreateChannelInput } from "@/domain/models";
 import { createChannelSchema } from "@/domain/models";
-import { Button } from "@/presentation/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/presentation/components/ui/dialog";
-import { Input } from "@/presentation/components/ui/input";
-import { Label } from "@/presentation/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/presentation/components/ui/select";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Input,
+  Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/presentation/components/ui";
 
 interface CreateChannelDialogProps {
   open: boolean;

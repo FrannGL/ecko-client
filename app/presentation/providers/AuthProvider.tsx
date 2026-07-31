@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { RefreshTokenUseCase } from "@/application/usecases";
 import { authRepository } from "@/data/repositories/auth.repository.impl";
 import { isTokenExpired } from "@/lib/utils";
-import { Logo } from "@/presentation/components/Logo";
+import { Logo } from "@/presentation/components/custom/Logo";
 import { useAuthStore } from "@/presentation/store/authStore";
 
 export function AuthProvider({ children }: { children: ReactNode }) {

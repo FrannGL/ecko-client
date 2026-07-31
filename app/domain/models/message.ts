@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { messageReactionInlineSchema } from "./reaction";
+
 export const messageSchema = z.object({
   id: z.number(),
   content: z.string().nullable(),
@@ -9,6 +11,7 @@ export const messageSchema = z.object({
   authorAvatarUrl: z.string().nullable(),
   parentMessageId: z.number().nullable(),
   createdAt: z.string(),
+  reactions: z.array(messageReactionInlineSchema).optional().default([]),
 });
 
 export const sendMessageSchema = z.object({
@@ -36,6 +39,7 @@ export class Message implements MessageData {
   authorAvatarUrl: string | null;
   parentMessageId: number | null;
   createdAt: string;
+  reactions: z.infer<typeof messageReactionInlineSchema>[];
 
   constructor(data: MessageData) {
     this.id = data.id;
@@ -46,6 +50,7 @@ export class Message implements MessageData {
     this.authorAvatarUrl = data.authorAvatarUrl;
     this.parentMessageId = data.parentMessageId;
     this.createdAt = data.createdAt;
+    this.reactions = data.reactions ?? [];
   }
 
   /**

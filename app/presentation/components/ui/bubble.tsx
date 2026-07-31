@@ -12,16 +12,16 @@ function BubbleGroup({ className, ...props }: ComponentProps<"div">) {
 }
 
 const bubbleVariants = cva(
-  "group/bubble relative flex w-fit max-w-[80%] min-w-0 flex-col gap-1 group-data-[align=end]/message:self-end data-[align=end]:self-end data-[variant=ghost]:max-w-full",
+  "group/bubble relative flex w-fit max-w-full min-w-0 flex-col gap-1 group-data-[align=end]/message:self-end data-[align=end]:self-end",
   {
     variants: {
       variant: {
         default:
-          "[&>[data-slot=bubble-content]]:bg-[lab(30.2514%_27.7853_-70.2699)] [&>[data-slot=bubble-content]]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[lab(30.2514%_27.7853_-70.2699)]/80",
+          "[&>[data-slot=bubble-content]]:bg-primary [&>[data-slot=bubble-content]]:text-primary-foreground [&>[data-slot=bubble-content]]:shadow-md [&>[data-slot=bubble-content]]:shadow-primary/20",
         secondary:
           "[&>[data-slot=bubble-content]]:bg-secondary [&>[data-slot=bubble-content]]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)]",
         muted:
-          "[&>[data-slot=bubble-content]]:bg-[lab(15.204%_0_-.00000596046)] [&>[data-slot=bubble-content]]:text-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)]",
+          "[&>[data-slot=bubble-content]]:bg-background/40 [&>[data-slot=bubble-content]]:backdrop-blur-xl [&>[data-slot=bubble-content]]:border [&>[data-slot=bubble-content]]:border-border/50 [&>[data-slot=bubble-content]]:text-foreground [&>[data-slot=bubble-content]]:shadow-sm",
         tinted:
           "[&>[data-slot=bubble-content]]:bg-[oklch(from_var(--primary)_0.93_calc(c*0.4)_h)] [&>[data-slot=bubble-content]]:text-foreground dark:[&>[data-slot=bubble-content]]:bg-[oklch(from_var(--primary)_0.3_calc(c*0.4)_h)] [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[oklch(from_var(--primary)_0.88_calc(c*0.5)_h)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-[oklch(from_var(--primary)_0.35_calc(c*0.5)_h)]",
         outline:
@@ -64,7 +64,7 @@ function BubbleContent({ className, render, ...props }: useRender.ComponentProps
     props: mergeProps<"div">(
       {
         className: cn(
-          "w-fit max-w-full min-w-0 overflow-hidden rounded-lg border border-transparent px-2.5 py-2 text-xs leading-relaxed wrap-break-word group-data-[align=end]/bubble:self-end [button]:text-left [button,a]:transition-colors [button,a]:outline-none [button,a]:focus-visible:border-ring [button,a]:focus-visible:ring-1 [button,a]:focus-visible:ring-ring/50",
+          "w-fit max-w-full min-w-[60px] sm:min-w-[80px] overflow-hidden rounded-[20px] border border-transparent px-4 py-2.5 text-[15px] leading-relaxed wrap-break-word group-data-[align=end]/bubble:self-end [button]:text-left [button,a]:transition-colors [button,a]:outline-none [button,a]:focus-visible:border-ring [button,a]:focus-visible:ring-1 [button,a]:focus-visible:ring-ring/50",
           className
         ),
       },

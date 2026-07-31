@@ -3,9 +3,9 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 import { connectStomp, disconnectStomp } from "@/data/websocket/stompClient";
 import type { CreateChannelInput, CreateServerInput, Server } from "@/domain/models";
-import { ChannelList } from "@/presentation/components/ChannelList";
-import { ServerDialogs } from "@/presentation/components/ServerDialogs";
-import { ServerNav } from "@/presentation/components/ServerNav";
+import { ChannelList } from "@/presentation/components/custom/ChannelList";
+import { ServerDialogs } from "@/presentation/components/custom/ServerDialogs";
+import { ServerNav } from "@/presentation/components/custom/ServerNav";
 import { useChannels, useCreateChannel } from "@/presentation/hooks/useChannels";
 import { useCreateServer, useServers } from "@/presentation/hooks/useServers";
 import { useAuthStore } from "@/presentation/store/authStore";

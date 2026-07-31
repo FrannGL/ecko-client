@@ -7,16 +7,21 @@ import { AlertCircle, ArrowRight } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { type LoginInput, loginSchema } from "@/domain/models/auth";
-import AuroraBackground from "@/presentation/components/AuroraBackground";
-import { Logo } from "@/presentation/components/Logo";
-import { Button } from "@/presentation/components/ui/button";
-import { Field, FieldContent, FieldError, FieldLabel } from "@/presentation/components/ui/field";
-import { Input } from "@/presentation/components/ui/input";
-import { Spinner } from "@/presentation/components/ui/spinner";
+import AuroraBackground from "@/presentation/components/custom/AuroraBackground";
+import { Logo } from "@/presentation/components/custom/Logo";
+import {
+  Alert,
+  AlertDescription,
+  Button,
+  Field,
+  FieldContent,
+  FieldError,
+  FieldLabel,
+  Input,
+  Spinner,
+} from "@/presentation/components/ui";
 import { useLogin } from "@/presentation/hooks/useAuth";
 import { useAuthStore } from "@/presentation/store/authStore";
-
-import { Alert, AlertDescription } from "~/presentation/components/ui/alert";
 
 export default function Login() {
   const navigate = useNavigate();

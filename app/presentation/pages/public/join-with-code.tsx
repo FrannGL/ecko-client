@@ -3,12 +3,9 @@ import { Link } from "react-router-dom";
 
 import { ArrowRight, CheckCircle2, KeyRound, Loader2 } from "lucide-react";
 
-import AuroraBackground from "@/presentation/components/AuroraBackground";
-import { Logo } from "@/presentation/components/Logo";
-import { Alert, AlertDescription } from "@/presentation/components/ui/alert";
-import { Button } from "@/presentation/components/ui/button";
-import { Field, FieldContent, FieldLabel } from "@/presentation/components/ui/field";
-import { Input } from "@/presentation/components/ui/input";
+import AuroraBackground from "@/presentation/components/custom/AuroraBackground";
+import { Logo } from "@/presentation/components/custom/Logo";
+import { Alert, AlertDescription, Button, Field, FieldContent, FieldLabel, Input } from "@/presentation/components/ui";
 import { useGetInviteCodeDetails, useRegisterWithInvite } from "@/presentation/hooks/useRegisterWithInvite";
 
 export default function JoinWithCodePage() {
