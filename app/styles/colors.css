@@ -1,0 +1,43 @@
+/* Color variables for the application */
+
+:root {
+  /* Muted color - used for sidebar and subtle backgrounds */
+  --color-muted-dark: lab(15.204% 0 -0.00000596046);
+
+  /* Primary color - used for messages and accents */
+  --color-primary-dark: lab(30.2514% 27.7853 -70.2699);
+}
+
+@layer components {
+  .dark {
+    /* Override sidebar colors with muted dark */
+    --sidebar: lab(15.204% 0 -0.00000596046);
+    --sidebar-accent: lab(15.204% 0 -0.00000596046);
+    --muted: lab(15.204% 0 -0.00000596046);
+  }
+
+  /* Custom scrollbar for all browsers */
+  .custom-scrollbar {
+    /* Firefox scrollbar */
+    scrollbar-color: lab(30.2514% 27.7853 -70.2699) transparent;
+    scrollbar-width: thin;
+
+    /* Chrome/Safari scrollbar */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: lab(30.2514% 27.7853 -70.2699);
+      border-radius: 9999px;
+
+      &:hover {
+        background-color: lab(30.2514% 27.7853 -70.2699 / 0.8);
+      }
+    }
+  }
+}
