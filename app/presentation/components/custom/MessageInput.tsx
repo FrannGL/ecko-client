@@ -22,10 +22,14 @@ export function MessageInput({ onSendMessage, onTyping, onBlur, isPending }: Mes
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<SendMessageInput>({
     resolver: zodResolver(sendMessageSchema),
   });
+
+  const content = watch("content");
+  const isButtonDisabled = isPending || !content?.trim();
 
   const onSubmit = (data: SendMessageInput) => {
     onSendMessage(data);
@@ -48,13 +52,13 @@ export function MessageInput({ onSendMessage, onTyping, onBlur, isPending }: Mes
                 className="h-12 bg-background/50 border-border/50 focus-visible:ring-primary/30 transition-all rounded-xl px-4 text-sm font-medium shadow-sm"
               />
             </div>
-            <FieldError errors={errors.content ? [errors.content] : []} />
+            {content?.trim() && <FieldError errors={errors.content ? [errors.content] : []} />}
           </FieldContent>
         </Field>
         <Button
           type="submit"
-          disabled={isPending}
-          className="self-end h-12 px-5 rounded-xl font-medium tracking-wide bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20 transition-all group"
+          disabled={isButtonDisabled}
+          className="self-end h-12 px-5 rounded-xl font-medium tracking-wide bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground shadow-lg shadow-primary/20 transition-all group"
         >
           <Send className="size-5 opacity-80 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
         </Button>

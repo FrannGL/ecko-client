@@ -20,11 +20,12 @@ export default function JoinWithCodePage() {
     data: inviteDetails,
     isLoading: isLoadingInvite,
     error: inviteError,
-  } = useGetInviteCodeDetails(code, isCodeValidated);
+  } = useGetInviteCodeDetails(code.toLowerCase(), isCodeValidated);
 
   const handleValidateCode = (e: FormEvent) => {
     e.preventDefault();
     if (code.length < 3) return;
+    // Validar con el código en minúsculas
     setIsCodeValidated(true);
   };
 
@@ -76,7 +77,7 @@ export default function JoinWithCodePage() {
                     id="join-code"
                     type="text"
                     value={code}
-                    onChange={(e) => setCode(e.target.value.toUpperCase())}
+                    onChange={(e) => setCode(e.target.value)}
                     placeholder="ej: xYz123"
                     className="h-12 bg-background/50 border-border/50 focus-visible:ring-primary/30 transition-all rounded-xl pl-10 pr-4 text-sm font-medium tracking-widest uppercase"
                     maxLength={10}
