@@ -44,7 +44,7 @@ export function ServerNav({
               className={`w-12 h-12 rounded-[16px] text-lg font-display font-semibold transition-all duration-200 shadow-sm ${
                 selectedServerId === server.id
                   ? "bg-primary text-primary-foreground shadow-primary/20 scale-105"
-                  : "bg-background/50 border border-border/50 text-foreground hover:bg-background hover:scale-105"
+                  : "bg-background/50 border border-border/50 text-foreground"
               }`}
             >
               {server.name.charAt(0).toUpperCase()}

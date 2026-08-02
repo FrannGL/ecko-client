@@ -34,10 +34,10 @@ export function LogoutDialog({ onLogout }: LogoutDialogProps) {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            variant="ghost"
+            variant="default"
             size="icon"
             onClick={() => setOpen(true)}
-            className="w-10 h-10 rounded-xl bg-(--color-muted-dark) text-white hover:bg-(--color-primary-dark)"
+            className="w-10 h-10 rounded-xl bg-(--color-muted-dark) text-white hover:bg-red-600 hover:shadow-[0_0_15px_2px_rgba(239,68,68,0.5)] transition-all duration-200"
           >
             <LogOut size={18} />
           </Button>
@@ -54,7 +54,12 @@ export function LogoutDialog({ onLogout }: LogoutDialogProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirm}>Cerrar sesión</AlertDialogAction>
+          <AlertDialogAction
+            onClick={handleConfirm}
+            className="bg-red-600 text-primary-foreground hover:bg-red-700 hover:shadow-[0_0_5px_1px_rgba(239,68,68,0.6)] transition-all duration-200"
+          >
+            Cerrar sesión
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

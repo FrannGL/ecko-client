@@ -311,35 +311,35 @@ export function MessageForm({ channelId }: Props) {
 
 ```bash
 # Install dependencies
-pnpm install
+bun install
 
 # Start dev server
-pnpm dev
+bun dev
 
 # Build for production
-pnpm build
+bun build
 
 # Production server
-pnpm start
+bun start
 ```
 
 ### Linting & Formatting
 
 ```bash
 # Check linting issues
-pnpm lint
+bun lint
 
 # Fix linting issues
-pnpm lint:fix
+bun lint:fix
 
 # Format code
-pnpm format
+bun format
 
 # Check formatting
-pnpm format:check
+bun format:check
 
 # Type checking
-pnpm typecheck
+bun typecheck
 ```
 
 ## Code Style Guidelines
@@ -553,9 +553,9 @@ export interface MessageRepository {
 - [ ] TypeScript strict mode compliance
 - [ ] No `any` types
 - [ ] Proper type imports
-- [ ] ESLint passes (`pnpm lint`)
-- [ ] Prettier formatted (`pnpm format`)
-- [ ] Type checking passes (`pnpm typecheck`)
+- [ ] ESLint passes (`bun lint`)
+- [ ] Prettier formatted (`bun format`)
+- [ ] Type checking passes (`bun typecheck`)
 
 ## Architecture & Data Flow
 
@@ -694,7 +694,7 @@ React Compiler automatically optimizes your components and hooks. **Manual memoi
 
 ### Deployment
 
-- **Build**: `pnpm build` → outputs to `dist/`
+- **Build**: `bun build` → outputs to `dist/`
 - **Deploy**: Serve `dist/` folder as static files (CDN, GitHub Pages, Vercel, Netlify, etc.)
 - **API**: Points to backend server (configured in env variables)
 
@@ -702,9 +702,9 @@ React Compiler automatically optimizes your components and hooks. **Manual memoi
 
 | Command          | Purpose                          |
 | ---------------- | -------------------------------- |
-| `pnpm dev`       | Start dev server with hot reload |
-| `pnpm build`     | Build for production (SPA)       |
-| `pnpm lint`      | Check code quality               |
-| `pnpm lint:fix`  | Auto-fix linting issues          |
-| `pnpm format`    | Format code with Prettier        |
-| `pnpm typecheck` | Run TypeScript type checking     |
+| `bun dev`       | Start dev server with hot reload |
+| `bun build`     | Build for production (SPA)       |
+| `bun lint`      | Check code quality               |
+| `bun lint:fix`  | Auto-fix linting issues          |
+| `bun format`    | Format code with Prettier        |
+| `bun typecheck` | Run TypeScript type checking     |

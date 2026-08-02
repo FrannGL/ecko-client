@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 
 import type { Channel } from "@/domain/models";
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@/presentation/components/ui";
+import { useActiveUsers } from "@/presentation/hooks/useActiveUsers";
 
 import { useAuthStore } from "../../store/authStore";
 
@@ -78,6 +79,7 @@ export function ChannelList({
                 #
               </span>
               <span className="truncate">{channel.name}</span>
+              <ChannelActiveCount serverId={selectedServerId!} channelId={channel.id} />
             </Link>
           ))}
       </div>
@@ -96,5 +98,15 @@ export function ChannelList({
         </div>
       </div>
     </aside>
+  );
+}
+
+function ChannelActiveCount({ serverId, channelId }: { serverId: number; channelId: number }) {
+  const { data } = useActiveUsers(serverId, channelId);
+
+  if (data == null) return null;
+
+  return (
+    <span className="ml-auto text-[10px] text-muted-foreground/70 tabular-nums shrink-0">({data.count})</span>
   );
 }
