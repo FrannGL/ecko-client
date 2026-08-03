@@ -244,16 +244,46 @@ app/
    bun install
    ```
 
-3. **Iniciar servidor de desarrollo**
+3. **Configurar variables de entorno**
+
+   Crea un archivo `.env.development` (o `.env.production` para producción) en la raíz del proyecto:
+
+   ```env
+   VITE_API_URL=http://localhost:8081
+   ```
+
+   **Nota:** Los archivos `.env*` están ignorados en Git por seguridad. No commitees credenciales o claves secretas. El URL del WebSocket (STOMP) se deriva automáticamente de `VITE_API_URL` (convierte `http`→`ws` y agrega `/ws`).
+
+   | Variable       | Descripción                         | Ejemplo                               |
+   | -------------- | ----------------------------------- | ------------------------------------- |
+   | `VITE_API_URL` | URL del servidor backend (API REST) | `http://localhost:8081` / `https://...` |
+
+4. **Iniciar servidor de desarrollo**
 
    ```bash
    bun run dev
    ```
 
-4. **Abrir en el navegador**
+5. **Abrir en el navegador**
    ```
    http://localhost:5173
    ```
+
+## 🚀 Deploy (Vercel)
+
+- **URL de producción:** `https://ecko-client.vercel.app`
+- **Backend:** `https://ecko-server.onrender.com`
+
+Definí en Vercel la variable de entorno de producción:
+
+```env
+VITE_API_URL=https://ecko-server.onrender.com
+```
+
+1. Importa el repo en [Vercel](https://vercel.com).
+2. Framework preset: **Vite** (build `bun run build`, output `dist/`).
+3. Agrega la env var anterior (Production).
+4. Deploy. El WebSocket se conecta automáticamente a `wss://ecko-server.onrender.com/ws`.
 
 ## 🔧 Comandos Disponibles
 

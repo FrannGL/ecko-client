@@ -23,15 +23,13 @@ export function useCreateServer() {
   const usecase = new CreateServerUseCase(serverRepository);
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreateServerInput) =>
-      // Use case orchestrates validation + repository call
-      usecase.execute(data),
+    mutationFn: (data: CreateServerInput) => usecase.execute(data),
     onSuccess: (newServer) => {
-      // Update cache directly instead of refetching
       qc.setQueryData(["servers"], (old: Server[] | undefined) => {
         if (!old) return [newServer];
         return [...old, newServer];
       });
+      qc.invalidateQueries({ queryKey: ["servers"] });
     },
   });
 }
@@ -41,7 +39,6 @@ export function useDeleteServer() {
   return useMutation({
     mutationFn: (id: number) => serverRepository.delete(id),
     onSuccess: (_, deletedServerId) => {
-      // Update cache by removing the deleted server
       qc.setQueryData(["servers"], (old: Server[] | undefined) => {
         if (!old) return undefined;
         return old.filter((s) => s.id !== deletedServerId);
@@ -62,14 +59,10 @@ export function useJoinServer() {
   const usecase = new JoinServerUseCase(serverRepository);
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (code: string) =>
-      // Use case orchestrates validation + repository call
-      usecase.execute(code),
+    mutationFn: (code: string) => usecase.execute(code),
     onSuccess: (joinedServer) => {
-      // Update cache directly instead of refetching
       qc.setQueryData(["servers"], (old: Server[] | undefined) => {
         if (!old) return [joinedServer];
-        // Avoid duplicates
         if (old.some((s) => s.id === joinedServer.id)) return old;
         return [...old, joinedServer];
       });
