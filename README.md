@@ -190,38 +190,18 @@ app/
 
 ## 🛠️ Stack Tecnológico
 
-### Framework Frontend
-
 - **[React 19.2.7](https://react.dev/)** - Librería UI con React Compiler
-- **[react-router-dom 6](https://reactrouter.com/)** - Routing SPA
-- **[Vite 8](https://vite.dev/)** - Build tool ultrarrápido
 - **[TypeScript 5.9](https://www.typescriptlang.org/)** - Type safety (strict mode)
-
-### Gestión de Estado
-
+- **[Vite 8](https://vite.dev/)** - Build tool ultrarrápido
+- **[Bun](https://bun.sh/)** - Runtime y package manager
 - **[Zustand 5](https://zustand-demo.pmnd.rs/)** - Estado global (auth, UI)
 - **[TanStack React Query 5](https://tanstack.com/query/)** - Sincronización de servidor
 - **[React Hook Form 7](https://react-hook-form.com/)** - Manejo de formularios
-- **[@hookform/resolvers 5](https://github.com/react-hook-form/resolvers)** - Validación de formularios
-
-### Comunicación
-
+- **[Zod 4](https://zod.dev/)** - Validación de esquemas
 - **[@stomp/stompjs 7](http://stomp-js.github.io/)** - Cliente WebSocket STOMP
 - **[Ky 2](https://github.com/sindresorhus/ky)** - Cliente HTTP
-- **[Zod 4](https://zod.dev/)** - Validación de esquemas
-
-### Estilos & UI
-
 - **[Tailwind CSS 4](https://tailwindcss.com/)** - CSS utility-first
-- **[Radix UI 1](https://www.radix-ui.com/)** - Primitivas UI accesibles
 - **[Lucide React](https://lucide.dev/)** - Librería de iconos
-- **[class-variance-authority](https://cva.style/docs)** - Variantes de componentes
-
-### Herramientas de Desarrollo
-
-- **[ESLint](https://eslint.org/)** - Linting y calidad de código
-- **[Prettier](https://prettier.io/)** - Formateador de código
-- **[Bun](https://bun.sh/)** - Runtime y package manager
 
 ## 🚀 Instalación
 
@@ -252,12 +232,6 @@ app/
    VITE_API_URL=http://localhost:8081
    ```
 
-   **Nota:** Los archivos `.env*` están ignorados en Git por seguridad. No commitees credenciales o claves secretas. El URL del WebSocket (STOMP) se deriva automáticamente de `VITE_API_URL` (convierte `http`→`ws` y agrega `/ws`).
-
-   | Variable       | Descripción                         | Ejemplo                               |
-   | -------------- | ----------------------------------- | ------------------------------------- |
-   | `VITE_API_URL` | URL del servidor backend (API REST) | `http://localhost:8081` / `https://...` |
-
 4. **Iniciar servidor de desarrollo**
 
    ```bash
@@ -269,21 +243,18 @@ app/
    http://localhost:5173
    ```
 
-## 🚀 Deploy (Vercel)
+## 🚀 Deployment
 
-- **URL de producción:** `https://ecko-client.vercel.app`
-- **Backend:** `https://ecko-server.onrender.com`
+### Production
 
-Definí en Vercel la variable de entorno de producción:
+- **Cliente (UI):** Hosted en [Vercel](https://vercel.com)  
+  🔗 **URL:** `https://ecko-client.vercel.app`
 
-```env
-VITE_API_URL=https://ecko-server.onrender.com
-```
+- **Servidor (API + WebSocket):** Hosted en [Render](https://render.com)  
+  🔗 **URL:** `https://ecko-server.onrender.com`
 
-1. Importa el repo en [Vercel](https://vercel.com).
-2. Framework preset: **Vite** (build `bun run build`, output `dist/`).
-3. Agrega la env var anterior (Production).
-4. Deploy. El WebSocket se conecta automáticamente a `wss://ecko-server.onrender.com/ws`.
+- **Base de Datos:** PostgreSQL en [Neon](https://neon.tech)  
+  🔗 **Proveedor:** Managed Postgres
 
 ## 🔧 Comandos Disponibles
 
