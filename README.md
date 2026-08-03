@@ -66,33 +66,22 @@ Aplicación de chat moderna y en tiempo real
 
 ## 🏗️ Arquitectura - Clean Architecture
 
-Este proyecto implementa **Clean Architecture de Robert C. Martin** con 4 capas independientes:
+Este proyecto implementa **Clean Architecture de Robert C. Martin** con 4 capas independientes, donde las dependencias fluyen **hacia adentro** (Domain):
+
+<img
+  src="./public/assets/clean-architecture.png"
+  alt="Clean Architecture Diagram"
+  width="1000"
+/>
 
 ### Las 4 Capas
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ 🎨 PRESENTACIÓN (presentation/)                                 │
-│ └─ React Components → Hooks (React Query) → Zustand Store       │
-│    Responsabilidad: Renderizar UI y orquestar con hooks         │
-│    Dependencias: Application (vía hooks), Zustand               │
-├─────────────────────────────────────────────────────────────────┤
-│ 📋 APLICACIÓN (application/usecases/)                           │
-│ └─ SendMessageUseCase, CreateServerUseCase, etc.               │
-│    Responsabilidad: Orquestar la lógica y validar reglas        │
-│    Dependencias: Domain (modelos + repositorios)                │
-├─────────────────────────────────────────────────────────────────┤
-│ 🎯 DOMINIO (domain/)                                            │
-│ └─ Rich Entities + Repository Interfaces                        │
-│    Responsabilidad: Lógica de negocio + contratos (sin impl.)   │
-│    Dependencias: NINGUNA (framework-independent)                │
-├─────────────────────────────────────────────────────────────────┤
-│ 🔧 DATOS (data/)                                                │
-│ └─ Repositorio Impl. + API (Ky) + WebSocket (STOMP)            │
-│    Responsabilidad: Acceso a datos y transporte                 │
-│    Dependencias: Domain (interfaces que implementa)             │
-└─────────────────────────────────────────────────────────────────┘
-```
+| Capa                | Ubicación               | Responsabilidad                                  | Dependencias |
+| ------------------- | ----------------------- | ------------------------------------------------ | ------------ |
+| 🎯 **Dominio**      | `domain/`               | Lógica de negocio, entidades ricas, interfaces   | NINGUNA      |
+| 📋 **Aplicación**   | `application/usecases/` | Validar reglas, orquestar casos de uso           | Domain       |
+| 🔧 **Datos**        | `data/`                 | Implementar repositorios, conectar API/WebSocket | Domain       |
+| 🎨 **Presentación** | `presentation/`         | Componentes React, hooks, UI state               | Application  |
 
 ### Principios Aplicados
 
