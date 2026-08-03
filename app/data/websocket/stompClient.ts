@@ -1,5 +1,8 @@
 import { Client, type IMessage } from "@stomp/stompjs";
 
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8081";
+const WS_URL = API_URL.replace(/^http/, "ws") + "/ws";
+
 let client: Client | null = null;
 
 type SubEntry = {
@@ -14,7 +17,7 @@ const pendingMessages: Array<{ destination: string; body: string }> = [];
 function ensureClient(): Client {
   if (!client) {
     client = new Client({
-      brokerURL: "ws://localhost:8081/ws",
+      brokerURL: WS_URL,
       reconnectDelay: 5000,
       beforeConnect: () => {
         const token = localStorage.getItem("accessToken");
