@@ -9,7 +9,7 @@ export const userSchema = z.object({
 });
 
 export const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(1),
 });
 
@@ -31,7 +31,7 @@ export const inviteCodeResponseSchema = z.object({
 export const registerInviteSchema = z.object({
   code: z.string().min(1),
   username: z.string().min(3).max(50),
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(6).max(100),
 });
 

@@ -1,64 +1,32 @@
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-import { connectStomp, disconnectStomp } from "@/data/websocket/stompClient";
-import type { CreateChannelInput, CreateServerInput, Server } from "@/domain/models";
 import { ChannelList } from "@/presentation/components/custom/ChannelList";
 import { ServerDialogs } from "@/presentation/components/custom/ServerDialogs";
 import { ServerNav } from "@/presentation/components/custom/ServerNav";
-import { useChannels, useCreateChannel } from "@/presentation/hooks/useChannels";
-import { useCreateServer, useServers } from "@/presentation/hooks/useServers";
-import { useAuthStore } from "@/presentation/store/authStore";
-import { useUIStore } from "@/presentation/store/uiStore";
+import { useProtectedLayout } from "@/presentation/hooks/useProtectedLayout";
 
 export default function ProtectedLayout() {
-  const navigate = useNavigate();
-  const { data: servers = [], isLoading, error } = useServers();
-  const { isAuthenticated, logout: logoutStore, user } = useAuthStore();
-  const { selectedServerId, setSelectedServer, selectedChannelId, setSelectedChannel } = useUIStore();
-  const { data: channels } = useChannels(selectedServerId!);
-
-  // UI state
-  const [showCreateServer, setShowCreateServer] = useState(false);
-  const [showCreateChannel, setShowCreateChannel] = useState(false);
-
-  // Mutations - memoize createChannel key based on selectedServerId
-  const createServer = useCreateServer();
-  const createChannel = useCreateChannel(selectedServerId || 0);
-
-  // Auth guard
-  useEffect(() => {
-    if (!isAuthenticated) navigate("/login", { replace: true });
-  }, [isAuthenticated]);
-
-  // WebSocket connection
-  useEffect(() => {
-    connectStomp();
-    return () => disconnectStomp();
-  }, []);
-
-  // Handlers
-  const handleCreateServer = (data: CreateServerInput) => {
-    createServer.mutate(data, {
-      onSuccess: (server) => {
-        setShowCreateServer(false);
-        setSelectedServer(server.id);
-      },
-    });
-  };
-
-  const handleCreateChannel = (data: CreateChannelInput) => {
-    createChannel.mutate(data, {
-      onSuccess: () => {
-        setShowCreateChannel(false);
-      },
-    });
-  };
-
-  const handleLogout = () => {
-    logoutStore();
-    navigate("/login");
-  };
+  const {
+    servers,
+    channels,
+    user,
+    selectedServerId,
+    selectedChannelId,
+    createServer,
+    createChannel,
+    showCreateServer,
+    setShowCreateServer,
+    showCreateChannel,
+    setShowCreateChannel,
+    isLoading,
+    error,
+    handleCreateServer,
+    handleCreateChannel,
+    handleLogout,
+    handleSelectServer,
+    setSelectedChannel,
+    selectedServer,
+  } = useProtectedLayout();
 
   if (isLoading) {
     return <div className="flex-1 flex items-center justify-center text-muted-foreground">Cargando servidores...</div>;
@@ -81,7 +49,7 @@ export default function ProtectedLayout() {
         servers={servers}
         selectedServerId={selectedServerId}
         user={user}
-        onSelectServer={(id) => setSelectedServer(selectedServerId === id ? null : id)}
+        onSelectServer={handleSelectServer}
         onCreateServer={() => setShowCreateServer(true)}
         onLogout={handleLogout}
       />
@@ -92,8 +60,8 @@ export default function ProtectedLayout() {
         selectedServerId={selectedServerId}
         onSelectChannel={setSelectedChannel}
         onCreateChannel={() => setShowCreateChannel(true)}
-        serverName={servers?.find((s: Server) => s.id === selectedServerId)?.name}
-        myRole={servers?.find((s: Server) => s.id === selectedServerId)?.myRole}
+        serverName={selectedServer?.name}
+        myRole={selectedServer?.myRole}
       />
 
       <main className="flex-1 flex flex-col min-w-0">

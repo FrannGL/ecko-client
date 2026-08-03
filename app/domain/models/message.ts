@@ -12,6 +12,9 @@ export const messageSchema = z.object({
   parentMessageId: z.number().nullable(),
   createdAt: z.string(),
   reactions: z.array(messageReactionInlineSchema).optional().default([]),
+  mediaUrl: z.string().nullable().optional(),
+  mediaType: z.string().nullable().optional(),
+  durationMs: z.number().nullable().optional(),
 });
 
 export const sendMessageSchema = z.object({
@@ -19,11 +22,15 @@ export const sendMessageSchema = z.object({
   parentMessageId: z.number().optional(),
 });
 
+export const sendAudioMessageSchema = z.object({
+  file: z.instanceof(Blob),
+  durationMs: z.number().min(1).max(60000),
+});
+
 export const reactionSchema = z.object({
   emoji: z.string().min(1).max(50),
 });
 
-// Base type from validation schema
 type MessageData = z.infer<typeof messageSchema>;
 
 /**
@@ -39,6 +46,9 @@ export class Message implements MessageData {
   authorAvatarUrl: string | null;
   parentMessageId: number | null;
   createdAt: string;
+  mediaUrl: string | null;
+  mediaType: string | null;
+  durationMs: number | null;
   reactions: z.infer<typeof messageReactionInlineSchema>[];
 
   constructor(data: MessageData) {
@@ -50,7 +60,17 @@ export class Message implements MessageData {
     this.authorAvatarUrl = data.authorAvatarUrl;
     this.parentMessageId = data.parentMessageId;
     this.createdAt = data.createdAt;
+    this.mediaUrl = data.mediaUrl ?? null;
+    this.mediaType = data.mediaType ?? null;
+    this.durationMs = data.durationMs ?? null;
     this.reactions = data.reactions ?? [];
+  }
+
+  /**
+   * Whether this message is an audio (voice) message
+   */
+  isAudio(): boolean {
+    return this.mediaType != null;
   }
 
   /**
@@ -83,4 +103,5 @@ export class Message implements MessageData {
 }
 
 export type SendMessageInput = z.infer<typeof sendMessageSchema>;
+export type SendAudioMessageInput = z.infer<typeof sendAudioMessageSchema>;
 export type ReactionInput = z.infer<typeof reactionSchema>;

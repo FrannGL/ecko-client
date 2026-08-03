@@ -1,4 +1,4 @@
-import type { Message, ReactionInput, SendMessageInput } from "../models/message";
+import type { Message, ReactionInput, SendAudioMessageInput, SendMessageInput } from "../models/message";
 
 export type UnsubscribeFunction = () => void;
 
@@ -13,6 +13,16 @@ export interface MessageRepository {
    * Abstracts the transport layer (STOMP protocol)
    */
   send(channelId: number, input: SendMessageInput): Promise<void>;
+
+  /**
+   * Send an audio message via HTTP multipart
+   */
+  sendAudioMessage(channelId: number, input: SendAudioMessageInput): Promise<void>;
+
+  /**
+   * Get a signed URL to play an audio message
+   */
+  getSignedMediaUrl(channelId: number, messageId: number): Promise<string>;
 
   /**
    * Subscribe to real-time message updates

@@ -4,13 +4,11 @@ export const channelSchema = z.object({
   id: z.number(),
   name: z.string(),
   serverId: z.number(),
-  type: z.enum(["TEXT", "VOICE"]),
   createdAt: z.string(),
 });
 
 export const createChannelSchema = z.object({
   name: z.string().min(2).max(100),
-  type: z.enum(["TEXT", "VOICE"]).optional(),
 });
 
 export const activeUsersResponseSchema = z.object({

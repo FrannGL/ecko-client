@@ -10,6 +10,7 @@ import {
   MessageHeader,
 } from "../ui/message";
 import { MessageReactions } from "./MessageReactions";
+import { VoiceMessagePlayer } from "./VoiceMessagePlayer";
 
 interface MessageItemProps {
   message: Message;
@@ -50,11 +51,20 @@ export function MessageItem({
             reactions={message.reactions}
             currentUserId={currentUserId}
           >
-            <Bubble variant={isOwn ? "default" : "muted"}>
-              <BubbleContent>
-                <p className="text-sm">{message.content}</p>
-              </BubbleContent>
-            </Bubble>
+            {message.isAudio() ? (
+              <VoiceMessagePlayer
+                channelId={channelId}
+                messageId={message.id}
+                durationMs={message.durationMs}
+                align={isOwn ? "end" : "start"}
+              />
+            ) : (
+              <Bubble variant={isOwn ? "default" : "muted"}>
+                <BubbleContent>
+                  <p className="text-sm">{message.content}</p>
+                </BubbleContent>
+              </Bubble>
+            )}
           </MessageReactions>
         </div>
 

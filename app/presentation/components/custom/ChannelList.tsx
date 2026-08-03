@@ -60,9 +60,7 @@ export function ChannelList({
         <div className="text-[11px] uppercase tracking-wider font-semibold text-muted-foreground/70 mb-2 px-2">
           Canales de Texto
         </div>
-        {channels
-          ?.filter((c) => c.type === "TEXT")
-          .map((channel) => (
+        {channels?.map((channel) => (
             <Link
               key={channel.id}
               to={`/server/${selectedServerId}/channel/${channel.id}`}

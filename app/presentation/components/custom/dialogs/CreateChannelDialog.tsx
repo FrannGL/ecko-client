@@ -1,4 +1,4 @@
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import type { UseMutationResult } from "@tanstack/react-query";
 
@@ -15,11 +15,6 @@ import {
   DialogTitle,
   Input,
   Label,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
 } from "@/presentation/components/ui";
 
 interface CreateChannelDialogProps {
@@ -60,32 +55,13 @@ export function CreateChannelDialog({ open, onOpenChange, onSubmit, mutation }: 
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="channel-type">Tipo</Label>
-            <Controller
-              name="type"
-              control={form.control}
-              render={({ field }) => (
-                <Select onValueChange={field.onChange} value={field.value || ""}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona tipo" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="TEXT">Texto</SelectItem>
-                    <SelectItem value="VOICE">Voz</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-          </div>
-
           {mutation.error && <p className="text-sm text-destructive">{(mutation.error as Error).message}</p>}
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit" disabled={mutation.isPending}>
+            <Button type="submit" disabled={mutation.isPending} className="bg-primary hover:bg-primary/90">
               {mutation.isPending ? "Creando..." : "Crear"}
             </Button>
           </DialogFooter>

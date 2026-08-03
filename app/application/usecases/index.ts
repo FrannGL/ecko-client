@@ -13,5 +13,7 @@ export type { RefreshTokenUseCaseInput, RefreshTokenUseCaseOutput } from "./Refr
 export { RegisterWithInviteUseCase } from "./RegisterWithInviteUseCase";
 export { SendMessageUseCase } from "./SendMessageUseCase";
 export type { SendMessageUseCaseInput } from "./SendMessageUseCase";
+export { SendAudioMessageUseCase } from "./SendAudioMessageUseCase";
+export type { SendAudioMessageUseCaseInput } from "./SendAudioMessageUseCase";
 export { ValidateInviteCodeUseCase } from "./ValidateInviteCodeUseCase";
 export type { ValidateInviteCodeInput } from "./ValidateInviteCodeUseCase";

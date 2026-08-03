@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { SendMessageUseCase } from "../../application/usecases";
+import { SendAudioMessageUseCase, SendMessageUseCase } from "../../application/usecases";
 import { messageRepository } from "../../data/repositories/message.repository.impl";
-import type { SendMessageInput } from "../../domain/models/message";
+import type { SendAudioMessageInput, SendMessageInput } from "../../domain/models/message";
 
 export function useMessages(channelId: number) {
   return useQuery({
@@ -21,6 +21,25 @@ export function useSendMessage(channelId: number) {
       // Clean abstraction: transaction boundary defined in usecase layer
       usecase.execute({ channelId, data }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["messages", channelId] }),
+  });
+}
+
+export function useSendAudioMessage(channelId: number) {
+  const usecase = new SendAudioMessageUseCase(messageRepository);
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (data: SendAudioMessageInput) => usecase.execute({ channelId, data }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["messages", channelId] }),
+  });
+}
+
+export function useSignedMediaUrl(channelId: number, messageId: number) {
+  return useQuery({
+    queryKey: ["media", channelId, messageId],
+    queryFn: () => messageRepository.getSignedMediaUrl(channelId, messageId),
+    enabled: !!channelId && !!messageId,
+    staleTime: 60 * 1000,
+    retry: false,
   });
 }
 

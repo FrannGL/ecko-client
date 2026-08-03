@@ -1,6 +1,7 @@
 import type { AuthResponse, InviteCodeResponse, LoginInput, RegisterInviteInput, User } from "../../domain/models/auth";
 import type { AuthRepository } from "../../domain/repositories/auth.repository";
 import { api } from "../api/client";
+import { ENDPOINTS } from "../api/endpoints";
 
 class AuthError extends Error {
   constructor(message: string) {
@@ -18,7 +19,7 @@ interface ApiError extends Error {
 export const authRepository: AuthRepository = {
   async login(data: LoginInput): Promise<AuthResponse> {
     try {
-      return await api.post("api/auth/login", { json: data }).json<AuthResponse>();
+      return await api.post(ENDPOINTS.auth.login, { json: data }).json<AuthResponse>();
     } catch (error) {
       const apiError = error as ApiError;
       if (apiError.response?.status === 401) {
@@ -32,16 +33,16 @@ export const authRepository: AuthRepository = {
   },
 
   async refresh(refreshToken: string): Promise<AuthResponse> {
-    return api.post("api/auth/refresh", { json: { refreshToken } }).json<AuthResponse>();
+    return api.post(ENDPOINTS.auth.refresh, { json: { refreshToken } }).json<AuthResponse>();
   },
 
   async logout(): Promise<void> {
-    await api.post("api/auth/logout");
+    await api.post(ENDPOINTS.auth.logout);
   },
 
   async validateInviteCode(code: string): Promise<InviteCodeResponse> {
     try {
-      return await api.get(`api/auth/invite/${code}`).json<InviteCodeResponse>();
+      return await api.get(ENDPOINTS.auth.invite(code)).json<InviteCodeResponse>();
     } catch (error) {
       const apiError = error as ApiError;
       if (apiError.response?.status === 400) {
@@ -53,7 +54,7 @@ export const authRepository: AuthRepository = {
 
   async registerWithInvite(data: RegisterInviteInput): Promise<AuthResponse> {
     try {
-      return await api.post("api/auth/register-invite", { json: data }).json<AuthResponse>();
+      return await api.post(ENDPOINTS.auth.registerInvite, { json: data }).json<AuthResponse>();
     } catch (error) {
       const apiError = error as ApiError;
       if (apiError.response?.status === 409) {
@@ -68,7 +69,7 @@ export const authRepository: AuthRepository = {
 
   async getMe(): Promise<User> {
     try {
-      return await api.get("api/auth/me").json<User>();
+      return await api.get(ENDPOINTS.auth.me).json<User>();
     } catch (error) {
       const apiError = error as ApiError;
       if (apiError.response?.status === 401) {

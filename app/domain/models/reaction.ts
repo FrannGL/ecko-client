@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-// Reaction inline schema (viene dentro de un mensaje)
 export const messageReactionInlineSchema = z.object({
   id: z.number(),
   messageId: z.number(),

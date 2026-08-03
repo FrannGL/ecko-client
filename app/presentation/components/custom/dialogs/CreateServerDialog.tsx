@@ -71,7 +71,7 @@ export function CreateServerDialog({ open, onOpenChange, onSubmit, mutation }: C
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit" disabled={mutation.isPending}>
+            <Button type="submit" disabled={mutation.isPending} className="bg-primary hover:bg-primary/90">
               {mutation.isPending ? "Creando..." : "Crear"}
             </Button>
           </DialogFooter>

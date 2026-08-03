@@ -41,10 +41,10 @@ export function ServerNav({
               onClick={() => {
                 onSelectServer(selectedServerId === server.id ? null : server.id);
               }}
-              className={`w-12 h-12 rounded-[16px] text-lg font-display font-semibold transition-all duration-200 shadow-sm ${
+              className={`w-12 h-12 rounded-[16px] text-lg font-display font-semibold transition-all duration-200 shadow-sm hover:shadow-[0_0_15px_2px_rgba(99,102,241,0.5)] ${
                 selectedServerId === server.id
-                  ? "bg-primary text-primary-foreground shadow-primary/20 scale-105"
-                  : "bg-background/50 border border-border/50 text-foreground"
+                  ? "bg-primary text-primary-foreground shadow-primary/20 scale-105 hover:scale-110"
+                  : "bg-background/50 border border-border/50 text-foreground hover:bg-primary/10"
               }`}
             >
               {server.name.charAt(0).toUpperCase()}

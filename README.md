@@ -36,6 +36,13 @@ Aplicación de chat moderna y en tiempo real
 - Reacciones con emoji a los mensajes
 - Historial completo de conversaciones
 
+### 🎙️ **Mensajes de Audio**
+
+- Grabación de mensajes de voz con el micrófono (`MediaRecorder API`)
+- Envío por HTTP multipart al server
+- Reproducción con reproductor custom (play/pausa + barra de progreso)
+- Audios almacenados en Cloudinary con entrega `authenticated` (URLs firmadas temporalmente)
+
 ### 🏢 **Gestión de Servidores**
 
 - Crear servidores personalizados

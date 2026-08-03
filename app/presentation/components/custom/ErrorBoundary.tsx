@@ -21,7 +21,6 @@ export function ErrorBoundary({ children, error }: ErrorBoundaryProps) {
     details = error.message;
     stack = error.stack;
 
-    // Detectar errores de autenticación
     if (details.includes("403") || details.includes("Forbidden") || details.includes("unauthorized")) {
       message = "Sesión expirada";
       details = "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
