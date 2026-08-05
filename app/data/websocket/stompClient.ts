@@ -19,6 +19,8 @@ function ensureClient(): Client {
     client = new Client({
       brokerURL: WS_URL,
       reconnectDelay: 5000,
+      heartbeatIncoming: 10000,
+      heartbeatOutgoing: 10000,
       beforeConnect: () => {
         const token = localStorage.getItem("accessToken");
         if (client) {
@@ -36,7 +38,9 @@ function ensureClient(): Client {
         }
         pendingMessages.length = 0;
       },
-      onStompError: () => {},
+      onStompError: (frame) => {
+        console.error("STOMP error:", frame.headers["message"], frame.body);
+      },
     });
   }
   return client;

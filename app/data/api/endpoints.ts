@@ -35,5 +35,5 @@ export const ENDPOINTS = {
 
 export const STOMP_TOPICS = {
   sendMessage: (channelId: number) => `/app/chat.sendMessage/${channelId}`,
-  messages: (channelId: number) => `/user/queue/messages/${channelId}`,
+  messages: (channelId: number) => `/topic/channel/${channelId}`,
 } as const;
