@@ -1,4 +1,4 @@
-# 🎙️ Ecko Client
+# 🎙️ Ecko
 
 <div align="center">
 
@@ -16,7 +16,7 @@ Aplicación de chat moderna y en tiempo real
 
 ## 📋 Descripción
 
-**Ecko Client** es una plataforma de chat colaborativo en tiempo real que permite a los usuarios crear servidores, organizar canales de comunicación e intercambiar mensajes de forma instantánea. Construida con las tecnologías más modernas de React y arquitectura limpia, garantiza seguridad de tipos, rendimiento optimizado y experiencia de usuario fluida.
+**Ecko** es una plataforma de chat colaborativo en tiempo real que permite a los usuarios crear servidores, organizar canales de comunicación e intercambiar mensajes de forma instantánea. Construida con las tecnologías más modernas de React y arquitectura limpia, garantiza seguridad de tipos, rendimiento optimizado y experiencia de usuario fluida.
 
 ### 🎯 Objetivos Principales
 
