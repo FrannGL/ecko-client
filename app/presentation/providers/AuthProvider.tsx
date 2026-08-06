@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { RefreshTokenUseCase } from "@/application/usecases";
 import { authRepository } from "@/data/repositories/auth.repository.impl";
 import { isTokenExpired } from "@/lib/utils";
-import { Logo } from "@/presentation/components/custom/Logo";
+import { Loading } from "@/presentation/components/custom/Loading";
 import { useAuthStore } from "@/presentation/store/authStore";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -65,14 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   if (!ready) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Logo size={64} showText={false} />
-          <p className="text-sm text-muted-foreground">Cargando...</p>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   return <>{children}</>;

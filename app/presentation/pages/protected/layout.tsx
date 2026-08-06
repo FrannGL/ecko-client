@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import { ChannelList } from "@/presentation/components/custom/ChannelList";
+import { Loading } from "@/presentation/components/custom/Loading";
 import { ServerDialogs } from "@/presentation/components/custom/ServerDialogs";
 import { ServerNav } from "@/presentation/components/custom/ServerNav";
 import { useProtectedLayout } from "@/presentation/hooks/useProtectedLayout";
@@ -29,7 +30,7 @@ export default function ProtectedLayout() {
   } = useProtectedLayout();
 
   if (isLoading) {
-    return <div className="flex-1 flex items-center justify-center text-muted-foreground">Cargando servidores...</div>;
+    return <Loading label="Cargando servidores..." />;
   }
 
   if (error) {
