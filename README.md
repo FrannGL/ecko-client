@@ -242,7 +242,7 @@ app/
 
 3. **Configurar variables de entorno**
 
-   Crea un archivo `.env.development` (o `.env.production` para producción) en la raíz del proyecto:
+   Crea un archivo `.env.development` (o `.env.production` para producción) en la raiz del proyecto:
 
    ```env
    VITE_API_URL=http://localhost:8081
