@@ -5,10 +5,10 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { messageRepository } from "@/data/repositories/message.repository.impl";
 import { subscribeToTopic } from "@/data/websocket/stompClient";
-import type { SendMessageInput } from "@/domain/models/message";
+import type { SendFileMessageInput, SendMessageInput } from "@/domain/models/message";
 import type { ReactionWebSocketEvent } from "@/domain/models/reaction";
 import { useChannels } from "@/presentation/hooks/useChannels";
-import { useMessages, useSendAudioMessage, useSendMessage } from "@/presentation/hooks/useMessages";
+import { useMessages, useSendAudioMessage, useSendFileMessage, useSendMessage } from "@/presentation/hooks/useMessages";
 import { useMessagesManager } from "@/presentation/hooks/useMessagesManager";
 import { useTypingIndicator } from "@/presentation/hooks/useTypingIndicator";
 import { useAuthStore } from "@/presentation/store/authStore";
@@ -28,6 +28,7 @@ export function useChat() {
   const { data: messages } = useMessages(numChannelId);
   const sendMessage = useSendMessage(numChannelId);
   const sendAudioMessage = useSendAudioMessage(numChannelId);
+  const sendFileMessage = useSendFileMessage(numChannelId);
 
   const { messages: localMessages, updateMessage } = useMessagesManager(messages);
   const { typingUsers, handleTyping, stopTyping, setUserNameMap } = useTypingIndicator(numChannelId, user?.id);
@@ -102,7 +103,12 @@ export function useChat() {
     sendAudioMessage.mutate({ file, durationMs });
   };
 
+  const handleSendFile = (data: SendFileMessageInput) => {
+    sendFileMessage.mutate(data);
+  };
+
   const isAudioPending = sendAudioMessage.isPending;
+  const isFilePending = sendFileMessage.isPending;
 
   return {
     numChannelId,
@@ -114,8 +120,10 @@ export function useChat() {
     messagesEndRef,
     handleSendMessage,
     handleSendAudio,
+    handleSendFile,
     handleTyping,
     stopTyping,
     isAudioPending,
+    isFilePending,
   };
 }

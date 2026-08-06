@@ -58,28 +58,28 @@ export function ChannelList({
 
       <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
         <div className="text-[11px] uppercase tracking-wider font-semibold text-muted-foreground/70 mb-2 px-2">
-          Canales de Texto
+          Canales Disponibles
         </div>
         {channels?.map((channel) => (
-            <Link
-              key={channel.id}
-              to={`/server/${selectedServerId}/channel/${channel.id}`}
-              onClick={() => onSelectChannel(channel.id)}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
-                selectedChannelId === channel.id
-                  ? "bg-primary/20 text-primary-foreground shadow-sm"
-                  : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
-              }`}
+          <Link
+            key={channel.id}
+            to={`/server/${selectedServerId}/channel/${channel.id}`}
+            onClick={() => onSelectChannel(channel.id)}
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+              selectedChannelId === channel.id
+                ? "bg-primary/20 text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
+            }`}
+          >
+            <span
+              className={`text-lg font-light ${selectedChannelId === channel.id ? "text-primary/70" : "text-muted-foreground/50"}`}
             >
-              <span
-                className={`text-lg font-light ${selectedChannelId === channel.id ? "text-primary/70" : "text-muted-foreground/50"}`}
-              >
-                #
-              </span>
-              <span className="truncate">{channel.name}</span>
-              <ChannelActiveCount serverId={selectedServerId!} channelId={channel.id} />
-            </Link>
-          ))}
+              #
+            </span>
+            <span className="truncate">{channel.name}</span>
+            <ChannelActiveCount serverId={selectedServerId!} channelId={channel.id} />
+          </Link>
+        ))}
       </div>
 
       <div className="p-3 border-t border-border/50 bg-background/30">
@@ -104,7 +104,5 @@ function ChannelActiveCount({ serverId, channelId }: { serverId: number; channel
 
   if (data == null) return null;
 
-  return (
-    <span className="ml-auto text-[10px] text-muted-foreground/70 tabular-nums shrink-0">({data.count})</span>
-  );
+  return <span className="ml-auto text-[10px] text-muted-foreground/70 tabular-nums shrink-0">({data.count})</span>;
 }

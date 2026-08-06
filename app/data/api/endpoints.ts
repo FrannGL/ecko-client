@@ -26,6 +26,7 @@ export const ENDPOINTS = {
     delete: (id: number) => `api/channels/${id}`,
     messages: (channelId: number) => `api/channels/${channelId}/messages`,
     audioMessage: (channelId: number) => `api/channels/${channelId}/messages/audio`,
+    attachmentMessage: (channelId: number) => `api/channels/${channelId}/messages/attachment`,
     media: (channelId: number, messageId: number) =>
       `api/channels/${channelId}/messages/${messageId}/media`,
     reactions: (channelId: number, messageId: number) =>

@@ -55,15 +55,13 @@ export function VoiceMessagePlayer({ channelId, messageId, durationMs, align = "
 
   if (isError) {
     return (
-      <div className="px-4 py-2 rounded-xl bg-muted/60 text-xs text-muted-foreground">
-        No se pudo cargar el audio
-      </div>
+      <div className="px-4 py-2 rounded-xl bg-muted/60 text-xs text-muted-foreground">No se pudo cargar el audio</div>
     );
   }
 
   return (
     <div
-      className={`flex items-center gap-2 rounded-xl px-3 py-2 min-w-[220px] border ${
+      className={`flex items-center gap-2 rounded-xl px-3 py-2 min-w-55 border ${
         align === "end" ? "bg-primary/20 border-primary/30" : "bg-muted/40 border-border/40"
       }`}
     >
@@ -84,7 +82,7 @@ export function VoiceMessagePlayer({ channelId, messageId, durationMs, align = "
         className="shrink-0 size-8 rounded-full flex items-center justify-center bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
         aria-label={isPlaying ? "Pausar" : "Reproducir"}
       >
-        {isPlaying ? <Pause className="size-4" /> : <Play className="size-4 translate-x-[1px]" />}
+        {isPlaying ? <Pause className="size-4" /> : <Play className="size-4 translate-x-px" />}
       </button>
 
       <div className="flex-1">

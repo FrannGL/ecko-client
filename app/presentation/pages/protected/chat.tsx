@@ -15,9 +15,11 @@ export default function ChatPage() {
     messagesEndRef,
     handleSendMessage,
     handleSendAudio,
+    handleSendFile,
     handleTyping,
     stopTyping,
     isAudioPending,
+    isFilePending,
   } = useChat();
 
   if (!numChannelId) {
@@ -39,9 +41,10 @@ export default function ChatPage() {
       <MessageInput
         onSendMessage={handleSendMessage}
         onSendAudio={handleSendAudio}
+        onSendFile={handleSendFile}
         onTyping={handleTyping}
         onBlur={stopTyping}
-        isPending={isAudioPending}
+        isPending={isAudioPending || isFilePending}
       />
 
       <div ref={messagesEndRef} />

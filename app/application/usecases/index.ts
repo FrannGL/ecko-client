@@ -15,5 +15,7 @@ export { SendMessageUseCase } from "./SendMessageUseCase";
 export type { SendMessageUseCaseInput } from "./SendMessageUseCase";
 export { SendAudioMessageUseCase } from "./SendAudioMessageUseCase";
 export type { SendAudioMessageUseCaseInput } from "./SendAudioMessageUseCase";
+export { SendFileMessageUseCase } from "./SendFileMessageUseCase";
+export type { SendFileMessageUseCaseInput } from "./SendFileMessageUseCase";
 export { ValidateInviteCodeUseCase } from "./ValidateInviteCodeUseCase";
 export type { ValidateInviteCodeInput } from "./ValidateInviteCodeUseCase";

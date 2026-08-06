@@ -22,6 +22,7 @@ Aplicación de chat moderna y en tiempo real
 
 - **Comunicación en Tiempo Real**: Mensajería instantánea mediante WebSocket STOMP
 - **Organización Flexible**: Servidores y canales para estructurar conversaciones
+- **Adjuntos de Archivos**: Compartir imágenes y documentos dentro de los mensajes
 - **Experiencia Moderna**: UI responsiva y accesible con Tailwind + Radix UI
 - **Código Mantenible**: Clean Architecture con separación clara de capas
 - **Type Safety**: TypeScript strict mode en todo el proyecto
@@ -42,6 +43,16 @@ Aplicación de chat moderna y en tiempo real
 - Envío por HTTP multipart al server
 - Reproducción con reproductor custom (play/pausa + barra de progreso)
 - Audios almacenados en Cloudinary con entrega `authenticated` (URLs firmadas temporalmente)
+
+### 📎 **Archivos Adjuntos**
+
+- Compartir imágenes y documentos (PDF, Word, Excel, PowerPoint, texto plano)
+- Adjuntar mediante selector de archivos o arrastrar y soltar sobre el input
+- Vista previa de los archivos pendientes antes de enviar (miniaturas para imágenes)
+- Caption opcional: mensaje de texto que acompaña al archivo
+- Descarga directa del archivo con botón en el mensaje
+- Iconos de formato con SVGs de marca (pdf, word, excel, json, txt) y fallback a Lucide
+- Máximo 25 MB por archivo; almacenados en Cloudinary `authenticated` con URLs firmadas
 
 ### 🏢 **Gestión de Servidores**
 
@@ -159,8 +170,17 @@ app/
     │   ├── ChannelList.tsx
     │   ├── MessageList.tsx
     │   ├── MessageInput.tsx
-    │   ├── ErrorBoundary.tsx
-    │   └── dialogs/           # Diálogos modales
+    │   ├── MessageItem.tsx
+    │   ├── MessageReactions.tsx
+    │   ├── VoiceMessagePlayer.tsx
+    │   ├── file-icon/         # Icono de archivo según tipo MIME
+    │   │   ├── file-icon.tsx # Componente FileIcon (SVG de marca + fallback)
+    │   │   └── rules.ts      # Reglas de mapeo MIME → icono
+    │   ├── dialogs/           # Diálogos modales
+    │   │   ├── AudioRecordDialog.tsx
+    │   │   ├── CreateChannelDialog.tsx
+    │   │   └── CreateServerDialog.tsx
+    │   └── ErrorBoundary.tsx
     ├── hooks/                 # Custom hooks (React Query + casos de uso)
     │   ├── useAuth.ts
     │   ├── useServers.ts

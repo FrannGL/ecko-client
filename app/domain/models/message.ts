@@ -14,6 +14,8 @@ export const messageSchema = z.object({
   reactions: z.array(messageReactionInlineSchema).optional().default([]),
   mediaUrl: z.string().nullable().optional(),
   mediaType: z.string().nullable().optional(),
+  mediaName: z.string().nullable().optional(),
+  mediaSize: z.number().nullable().optional(),
   durationMs: z.number().nullable().optional(),
 });
 
@@ -25,6 +27,11 @@ export const sendMessageSchema = z.object({
 export const sendAudioMessageSchema = z.object({
   file: z.instanceof(Blob),
   durationMs: z.number().min(1).max(60000),
+});
+
+export const sendFileMessageSchema = z.object({
+  file: z.instanceof(Blob),
+  content: z.string().max(4000).optional(),
 });
 
 export const reactionSchema = z.object({
@@ -48,6 +55,8 @@ export class Message implements MessageData {
   createdAt: string;
   mediaUrl: string | null;
   mediaType: string | null;
+  mediaName: string | null;
+  mediaSize: number | null;
   durationMs: number | null;
   reactions: z.infer<typeof messageReactionInlineSchema>[];
 
@@ -62,14 +71,29 @@ export class Message implements MessageData {
     this.createdAt = data.createdAt;
     this.mediaUrl = data.mediaUrl ?? null;
     this.mediaType = data.mediaType ?? null;
+    this.mediaName = data.mediaName ?? null;
+    this.mediaSize = data.mediaSize ?? null;
     this.durationMs = data.durationMs ?? null;
     this.reactions = data.reactions ?? [];
   }
 
-  /**
-   * Whether this message is an audio (voice) message
-   */
   isAudio(): boolean {
+    return this.mediaType != null && this.mediaType.startsWith("audio/");
+  }
+
+  isImage(): boolean {
+    return this.mediaType != null && this.mediaType.startsWith("image/");
+  }
+
+  isDocument(): boolean {
+    if (this.mediaType == null) return false;
+    return (
+      this.mediaType.startsWith("application/") ||
+      this.mediaType.startsWith("text/")
+    );
+  }
+
+  isMedia(): boolean {
     return this.mediaType != null;
   }
 
@@ -104,4 +128,5 @@ export class Message implements MessageData {
 
 export type SendMessageInput = z.infer<typeof sendMessageSchema>;
 export type SendAudioMessageInput = z.infer<typeof sendAudioMessageSchema>;
+export type SendFileMessageInput = z.infer<typeof sendFileMessageSchema>;
 export type ReactionInput = z.infer<typeof reactionSchema>;

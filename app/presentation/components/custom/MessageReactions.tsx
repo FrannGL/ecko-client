@@ -1,4 +1,4 @@
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import type { MessageReaction } from "@/domain/models/reaction";
 import { useToggleReaction } from "@/presentation/hooks/useReactions";
@@ -13,10 +13,8 @@ interface MessageReactionsProps {
   children?: ReactNode;
 }
 
-/**
- * Component to display message reactions and handle toggling reactions
- * Groups reactions by emoji and shows reaction count
- */
+const REACTION_EMOJIS = ["👍", "❤️", "😂", "🔥", "😮", "😢", "🎉", "🤔"];
+
 export function MessageReactions({
   children,
   channelId,
@@ -24,10 +22,8 @@ export function MessageReactions({
   reactions = [],
   currentUserId,
 }: MessageReactionsProps) {
-  const [showPicker, setShowPicker] = useState(false);
   const toggleReactionMutation = useToggleReaction(channelId, messageId);
 
-  // Group reactions by emoji and track if current user has reacted
   const groupedReactions = useMemo(() => {
     const groups = new Map<string, { count: number; userReacted: boolean }>();
 
@@ -51,26 +47,23 @@ export function MessageReactions({
   };
 
   return (
-    <div className="flex flex-col group-data-[align=end]/message:items-end">
-      <Tooltip open={showPicker} onOpenChange={setShowPicker} delayDuration={200}>
+    <div className="flex flex-col group-data-[align=end]/message:items-end w-fit">
+      <Tooltip delayDuration={300}>
         <TooltipTrigger asChild>
-          <div className="w-fit cursor-pointer">{children}</div>
+          <div className="cursor-pointer inline-flex">{children}</div>
         </TooltipTrigger>
         <TooltipContent
           side="top"
           align="center"
-          className="p-3 bg-card/60 backdrop-blur-xl border border-border/50 shadow-xl rounded-2xl animate-in zoom-in-95 duration-200"
           sideOffset={8}
+          className="p-3 bg-card/90 backdrop-blur-xl border border-border/50 shadow-xl rounded-2xl animate-in zoom-in-95 fade-in-0 duration-150"
         >
           <div className="grid grid-cols-4 gap-2">
-            {["👍", "❤️", "😂", "🔥", "😮", "😢", "🎉", "🤔"].map((emoji) => (
+            {REACTION_EMOJIS.map((emoji) => (
               <button
                 key={emoji}
                 className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/10 hover:scale-110 transition-all cursor-pointer text-xl"
-                onClick={() => {
-                  handleReactionClick(emoji);
-                  setShowPicker(false);
-                }}
+                onClick={() => handleReactionClick(emoji)}
                 disabled={toggleReactionMutation.isPending}
               >
                 {emoji}
@@ -80,7 +73,6 @@ export function MessageReactions({
         </TooltipContent>
       </Tooltip>
 
-      {/* Display grouped reactions */}
       {groupedReactions.size > 0 && (
         <div className="flex items-center gap-2 mt-2 flex-wrap group-data-[align=end]/message:justify-end">
           {Array.from(groupedReactions).map(([emoji, { count, userReacted }]) => (

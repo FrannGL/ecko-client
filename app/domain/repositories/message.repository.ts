@@ -1,4 +1,4 @@
-import type { Message, ReactionInput, SendAudioMessageInput, SendMessageInput } from "../models/message";
+import type { Message, ReactionInput, SendAudioMessageInput, SendFileMessageInput, SendMessageInput } from "../models/message";
 
 export type UnsubscribeFunction = () => void;
 
@@ -18,6 +18,11 @@ export interface MessageRepository {
    * Send an audio message via HTTP multipart
    */
   sendAudioMessage(channelId: number, input: SendAudioMessageInput): Promise<void>;
+
+  /**
+   * Send a file attachment (image or document) via HTTP multipart
+   */
+  sendFileMessage(channelId: number, input: SendFileMessageInput): Promise<void>;
 
   /**
    * Get a signed URL to play an audio message

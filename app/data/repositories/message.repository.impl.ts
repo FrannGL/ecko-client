@@ -1,4 +1,4 @@
-import type { Message, ReactionInput, SendAudioMessageInput, SendMessageInput } from "../../domain/models/message";
+import type { Message, ReactionInput, SendAudioMessageInput, SendFileMessageInput, SendMessageInput } from "../../domain/models/message";
 import { Message as MessageEntity, messageSchema } from "../../domain/models/message";
 import type { MessageRepository, UnsubscribeFunction } from "../../domain/repositories/message.repository";
 import { api } from "../api/client";
@@ -34,6 +34,27 @@ export const messageRepository: MessageRepository = {
     formData.append("durationMs", String(input.durationMs));
 
     await api.post(ENDPOINTS.channels.audioMessage(channelId), { body: formData });
+  },
+
+  async sendFileMessage(channelId: number, input: SendFileMessageInput): Promise<void> {
+    const formData = new FormData();
+    const fileName = input.file instanceof File ? input.file.name : "attachment";
+    formData.append("file", input.file, fileName);
+    if (input.content) {
+      formData.append("content", input.content);
+    }
+
+    console.warn("[sendFileMessage] FormData:", {
+      channelId,
+      file: fileName,
+      type: input.file.type,
+      size: input.file.size,
+      content: input.content,
+      hasContentField: formData.has("content"),
+      entries: [...formData.entries()].map(([k, v]) => [k, typeof v === "string" ? v : `[File: ${(v as File).name}]`]),
+    });
+
+    await api.post(ENDPOINTS.channels.attachmentMessage(channelId), { body: formData });
   },
 
   async getSignedMediaUrl(channelId: number, messageId: number): Promise<string> {
